@@ -69,7 +69,7 @@ if %errorlevel% neq 0 (
 
 :: 4. Memory Subsystem Integration Simulation
 echo.
-echo [4/4] Running Memory Subsystem Integration Simulation...
+echo [4/5] Running Memory Subsystem Integration Simulation...
 "%IVERILOG%" -g2012 -o temp\sim_subsystem.vvp rtl\dma\dma_pkg.sv rtl\decoder\address_decoder.sv rtl\memory\sram_controller.sv rtl\memory\memory_arbiter.sv rtl\dma\dma_regs.sv rtl\dma\dma_fsm.sv rtl\dma\dma_controller.sv rtl\top\memory_subsystem_top.sv tb\tb_memory_subsystem.sv
 if %errorlevel% neq 0 (
     echo [ERROR] Memory Subsystem Integration compilation failed!
@@ -81,6 +81,23 @@ if %errorlevel% neq 0 (
         set ALL_PASSED=0
     ) else (
         echo [PASS] Memory Subsystem Integration test bench passed.
+    )
+)
+
+:: 5. AXI-Lite Slave Simulation
+echo.
+echo [5/5] Running AXI-Lite Slave Simulation...
+"%IVERILOG%" -g2012 -o temp\sim_axi_lite_slave.vvp rtl\axi\axi_lite_slave.sv tb\tb_axi_lite_slave.sv
+if %errorlevel% neq 0 (
+    echo [ERROR] AXI-Lite Slave compilation failed!
+    set ALL_PASSED=0
+) else (
+    "%VVP%" temp\sim_axi_lite_slave.vvp
+    if %errorlevel% neq 0 (
+        echo [FAIL] AXI-Lite Slave test bench failed!
+        set ALL_PASSED=0
+    ) else (
+        echo [PASS] AXI-Lite Slave test bench passed.
     )
 )
 

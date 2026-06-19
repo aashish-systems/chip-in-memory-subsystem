@@ -1,9 +1,6 @@
-// DMA Finite State Machine Module
-// Manages the state transitions and control signals for the DMA transfer.
-
-`timescale 1ns/1ps
-
+/* verilator lint_off IMPORTSTAR */
 import dma_pkg::*;
+/* verilator lint_on IMPORTSTAR */
 
 module dma_fsm (
     input  logic        clk,
@@ -132,6 +129,7 @@ module dma_fsm (
     end
 
 `ifndef SYNTHESIS
+    /* verilator lint_off SYNCASYNCNET */
     // Synchronous procedural assertions for simulation checking
     always @(posedge clk) begin
         if (rst_n) begin
@@ -147,6 +145,7 @@ module dma_fsm (
             end
         end
     end
+    /* verilator lint_on SYNCASYNCNET */
 `endif
 
 endmodule
