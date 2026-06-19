@@ -1,0 +1,7 @@
+# Simulation and build artifacts
+*.vcd
+*.vvp
+*.log
+*.out
+*.tmp
+temp/
